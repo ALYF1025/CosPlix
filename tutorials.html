@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorials – CosPlix</title>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { display: ['Dela Gothic One', 'cursive'], body: ['Outfit', 'sans-serif'] } } }
+    }
+  </script>
+</head>
+<body class="font-body">
+  <div id="particles-js"></div>
+
+  <div class="content-wrapper flex flex-col min-h-screen">
+    <nav class="fixed top-0 left-0 w-full z-50" style="background:rgba(10,10,26,0.92); backdrop-filter:blur(16px); border-bottom:1px solid rgba(255,255,255,0.05);">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl transition-transform group-hover:rotate-12" style="background:linear-gradient(135deg,#ff006e,#8338ec);">⚡</div>
+          <span class="font-display text-lg tracking-wide gradient-text">CosPlix</span>
+        </a>
+        <div class="hidden lg:flex items-center gap-6 text-sm font-bold">
+          <a href="index.html"     class="nav-link" style="--c:#ff006e;">Home</a>
+          <a href="news.html"      class="nav-link" style="--c:#8338ec;">News</a>
+          <a href="gallery.html"   class="nav-link" style="--c:#3a86ff;">Gallery</a>
+          <a href="events.html"    class="nav-link" style="--c:#fb5607;">Events</a>
+          <a href="tutorials.html" class="nav-link active" style="--c:#ffbe0b; color:#ffbe0b;">Tutorials</a>
+          <a href="community.html" class="nav-link" style="--c:#06d6a0;">Community</a>
+          <a href="about.html"     class="nav-link" style="--c:#e0aaff;">About</a>
+          <a href="contact.html"   class="nav-link" style="--c:#ff006e;">Support</a>
+        </div>
+        <button class="lg:hidden p-2" onclick="toggleMobile()" aria-label="Open Menu">
+          <i data-lucide="menu" style="color:#ff006e;"></i>
+        </button>
+      </div>
+    </nav>
+
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 flex flex-col gap-1 p-6 pt-20 hidden lg:hidden">
+      <button class="absolute top-4 right-4 p-2" onclick="toggleMobile()" aria-label="Close Menu">
+        <i data-lucide="x" style="color:#ff006e;"></i>
+      </button>
+      <a href="index.html"     class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">🏠 Home</a>
+      <a href="news.html"      class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">📰 News</a>
+      <a href="gallery.html"   class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">📸 Gallery</a>
+      <a href="events.html"    class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">🗓️ Events</a>
+      <a href="tutorials.html" class="text-lg font-semibold py-3 px-4 rounded-lg bg-white/5 text-[#ffbe0b]">✂️ Tutorials</a>
+      <a href="community.html" class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">💬 Community</a>
+      <a href="about.html"     class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">👥 About</a>
+      <a href="contact.html"   class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">🎧 Support</a>
+    </div>
+
+    <main class="pt-32 pb-16 max-w-7xl mx-auto px-6 flex-grow w-full">
+      <div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <h1 class="font-display text-4xl md:text-5xl mb-3"><span style="color:#ffbe0b;">Tutorials</span> <span style="color:#fff;">& Guides</span></h1>
+          <p style="color:#8080a0;" class="text-lg">Master the craft with industry-standard techniques.</p>
+        </div>
+        <div class="flex gap-4">
+          <div class="stats-pill px-4 py-2 rounded-2xl text-center min-w-[100px]">
+            <div class="text-xs text-gray-500 uppercase font-bold tracking-widest">Lessons</div>
+            <div class="text-xl font-display text-white" id="lesson-count">6</div>
+          </div>
+          <div class="stats-pill px-4 py-2 rounded-2xl text-center border-l-2 min-w-[140px]" style="border-color:#ff006e;">
+            <div class="text-xs text-gray-500 uppercase font-bold tracking-widest">Difficulty</div>
+            <select id="difficulty-filter" onchange="filterTutorials()" class="bg-transparent text-xl font-display text-white outline-none cursor-pointer text-center w-full">
+              <option value="All"          class="bg-[#0a0a1a]">All</option>
+              <option value="Beginner"     class="bg-[#0a0a1a]">Beginner</option>
+              <option value="Intermediate" class="bg-[#0a0a1a]">Intermediate</option>
+              <option value="Advanced"     class="bg-[#0a0a1a]">Advanced</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div id="tutorials-list" class="grid md:grid-cols-2 gap-8"></div>
+    </main>
+
+    <footer class="w-full py-10 px-6 text-center mt-auto" style="background:rgba(255,255,255,0.02); border-top:1px solid rgba(255,255,255,0.05);">
+      <div class="font-display text-lg mb-2 gradient-text">CosPlix</div>
+      <p class="text-xs" style="color:#606080;">© 2026 CosPlix Academy.</p>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Toggle logic for mobile menu
+    function toggleMobile() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+      menu.classList.toggle('open');
+    }
+
+    $(document).ready(() => {
+      lucide.createIcons();
+      initTutorialsPage();
+    });
+  </script>
+</body>
+</html>

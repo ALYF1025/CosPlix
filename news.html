@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News & Social – CosPlix</title>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { display: ['Dela Gothic One', 'cursive'], body: ['Outfit', 'sans-serif'] } } }
+    }
+  </script>
+</head>
+<body class="font-body page-news">
+
+  <div class="bg-blob" style="top:-10%; left:-5%;"></div>
+  <div class="bg-blob" style="bottom:-10%; right:-5%; background:radial-gradient(circle,rgba(255,0,110,0.05) 0%,transparent 70%);"></div>
+
+  <div id="particles-js"></div>
+
+  <div class="main-content">
+    <nav id="main-nav" class="fixed top-0 left-0 w-full z-50 border-b border-white/5 bg-black/60 backdrop-blur-xl">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ff006e] to-[#8338ec] flex items-center justify-center text-xl shadow-[0_0_20px_rgba(255,0,110,0.4)] group-hover:rotate-12 transition-transform">⚡</div>
+          <span class="font-display text-xl tracking-tighter gradient-text">CosPlix</span>
+        </a>
+        <div class="hidden lg:flex items-center gap-7">
+          <a href="index.html"     class="nav-link">Home</a>
+          <a href="news.html"      class="nav-link active" style="color:#ff006e;">News</a>
+          <a href="gallery.html"   class="nav-link">Gallery</a>
+          <a href="events.html"    class="nav-link">Events</a>
+          <a href="tutorials.html" class="nav-link">Tutorials</a>
+          <a href="community.html" class="nav-link">Community</a>
+          <a href="about.html"     class="nav-link">About</a>
+          <a href="contact.html"   class="nav-link">Support</a>
+        </div>
+        <button class="lg:hidden p-2" onclick="toggleMobile()"><i data-lucide="menu" style="color:#ff006e;"></i></button>
+      </div>
+    </nav>
+
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 z-[60] flex flex-col gap-1 p-6 pt-24">
+      <button class="absolute top-6 right-6 p-2" onclick="toggleMobile()"><i data-lucide="x" style="color:#ff006e;"></i></button>
+      <a href="index.html"     class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">🏠 Home</a>
+      <a href="news.html"      class="text-lg font-semibold py-3 px-4 rounded-lg bg-white/5 text-[#ff006e]">📰 News</a>
+      <a href="gallery.html"   class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">📸 Gallery</a>
+      <a href="events.html"    class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">🗓️ Events</a>
+      <a href="tutorials.html" class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">✂️ Tutorials</a>
+      <a href="community.html" class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">💬 Community</a>
+      <a href="about.html"     class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">👥 About</a>
+      <a href="contact.html"   class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">🎧 Support</a>
+    </div>
+
+    <main class="pt-32 pb-20 max-w-6xl mx-auto px-6">
+      <div class="relative mb-16 text-center">
+        <h1 class="pulse-text text-5xl md:text-7xl mb-4 tracking-tight">Currently <span class="gradient-text">Trending</span></h1>
+        <p class="text-gray-400 max-w-md mx-auto text-[10px] font-black tracking-[0.3em] uppercase opacity-70">Live Data Stream // Official Updates</p>
+      </div>
+
+      <section class="mb-24">
+        <div id="api-news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="col-span-full flex flex-col items-center py-20">
+            <div class="relative w-16 h-16">
+              <div class="absolute inset-0 border-2 border-[#ff006e]/20 rounded-full"></div>
+              <div class="absolute inset-0 border-t-2 border-[#ff006e] rounded-full animate-spin"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="relative">
+        <div class="text-center mb-12">
+          <h2 class="font-display text-3xl mb-8">News <span style="color:#3a86ff;">Channels</span></h2>
+          <div class="flex flex-wrap justify-center gap-3 mb-10">
+            <button class="feed-btn active-tab px-6 py-3 rounded-2xl text-[10px] font-black tracking-widest uppercase border border-white/5" id="btn-ann"         onclick="switchFeed('ann')"         style="color:#3a86ff;">📘 ANN News</button>
+            <button class="feed-btn          px-6 py-3 rounded-2xl text-[10px] font-black tracking-widest uppercase border border-white/5" id="btn-crunchyroll" onclick="switchFeed('crunchyroll')" style="color:#fb5607;">🟧 Crunchyroll</button>
+            <button class="feed-btn          px-6 py-3 rounded-2xl text-[10px] font-black tracking-widest uppercase border border-white/5" id="btn-ufotable"    onclick="switchFeed('ufotable')"    style="color:#ff006e;">🌸 Ufotable</button>
+            <button class="feed-btn          px-6 py-3 rounded-2xl text-[10px] font-black tracking-widest uppercase border border-white/5" id="btn-comicfiesta" onclick="switchFeed('comicfiesta')" style="color:#06d6a0;">🎪 Comic Fiesta</button>
+          </div>
+        </div>
+
+        <div class="max-w-xl mx-auto p-1 rounded-[2.8rem] bg-gradient-to-b from-white/20 to-transparent shadow-2xl">
+          <div class="rounded-[2.4rem] overflow-hidden bg-white" style="height:600px;">
+            <div id="feed-ann" class="social-feed active h-full">
+              <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fanimenewsnetwork&tabs=timeline&width=500&height=600&small_header=true" width="100%" height="100%" style="border:none;" scrolling="no"></iframe>
+            </div>
+            <div id="feed-crunchyroll" class="social-feed h-full">
+              <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FCrunchyroll&tabs=timeline&width=500&height=600&small_header=true" width="100%" height="100%" style="border:none;" scrolling="no"></iframe>
+            </div>
+            <div id="feed-ufotable" class="social-feed h-full">
+              <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fufotable&tabs=timeline&width=500&height=600&small_header=true" width="100%" height="100%" style="border:none;" scrolling="no"></iframe>
+            </div>
+            <div id="feed-comicfiesta" class="social-feed h-full">
+              <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fcomicfiesta&tabs=timeline&width=500&height=600&small_header=true" width="100%" height="100%" style="border:none;" scrolling="no"></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="w-full py-8 text-center mt-auto" style="background:rgba(255,255,255,0.02); border-top:1px solid rgba(255,255,255,0.05);">
+      <div class="font-display text-lg mb-2 gradient-text">CosPlix</div>
+      <p class="text-xs" style="color:#606080;">© 2026 CosPlix. Made with 💜</p>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+    $(document).ready(function () { initNewsPage(); });
+  </script>
+</body>
+</html>

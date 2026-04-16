@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community – CosPlix</title>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { display: ['Dela Gothic One', 'cursive'], body: ['Outfit', 'sans-serif'] } } }
+    }
+  </script>
+</head>
+<body class="font-body">
+  <div id="particles-js"></div>
+
+  <div class="content-wrapper flex flex-col min-h-screen">
+    <nav class="fixed top-0 left-0 w-full z-50" style="background:rgba(10,10,26,0.92); backdrop-filter:blur(16px); border-bottom:1px solid rgba(255,255,255,0.05);">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl transition-transform group-hover:rotate-12" style="background:linear-gradient(135deg,#ff006e,#8338ec);">⚡</div>
+          <span class="font-display text-lg tracking-wide gradient-text">CosPlix</span>
+        </a>
+        <div class="hidden lg:flex items-center gap-6 text-sm font-bold">
+          <a href="index.html"     class="nav-link" style="--c:#ff006e;">Home</a>
+          <a href="news.html"      class="nav-link" style="--c:#8338ec;">News</a>
+          <a href="gallery.html"   class="nav-link" style="--c:#3a86ff;">Gallery</a>
+          <a href="events.html"    class="nav-link" style="--c:#fb5607;">Events</a>
+          <a href="tutorials.html" class="nav-link" style="--c:#ffbe0b;">Tutorials</a>
+          <a href="community.html" class="nav-link active" style="--c:#06d6a0; color:#06d6a0;">Community</a>
+          <a href="about.html"     class="nav-link" style="--c:#e0aaff;">About</a>
+          <a href="contact.html"   class="nav-link" style="--c:#ff006e;">Support</a>
+        </div>
+        <button class="lg:hidden p-2" onclick="toggleMobile()" aria-label="Open Menu">
+          <i data-lucide="menu" style="color:#ff006e;"></i>
+        </button>
+      </div>
+    </nav>
+
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 flex flex-col gap-1 p-6 pt-20 hidden lg:hidden">
+      <button class="absolute top-4 right-4 p-2" onclick="toggleMobile()" aria-label="Close Menu">
+        <i data-lucide="x" style="color:#ff006e;"></i>
+      </button>
+      <a href="index.html"     class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">🏠 Home</a>
+      <a href="news.html"      class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">📰 News</a>
+      <a href="gallery.html"   class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">📸 Gallery</a>
+      <a href="events.html"    class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">🗓️ Events</a>
+      <a href="tutorials.html" class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">✂️ Tutorials</a>
+      <a href="community.html" class="text-lg font-semibold py-3 px-4 rounded-lg bg-white/5 text-[#06d6a0]">💬 Community</a>
+      <a href="about.html"     class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">👥 About</a>
+      <a href="contact.html"   class="text-lg font-semibold py-3 px-4 rounded-lg hover:bg-white/5">🎧 Support</a>
+    </div>
+
+    <main class="pt-32 pb-16 max-w-7xl mx-auto px-6 flex-grow">
+      <h1 class="font-display text-4xl mb-2"><span style="color:#06d6a0;">Community</span> <span style="color:#fff;">Forum</span></h1>
+      <p class="mb-8" style="color:#8080a0;">Join the conversation with fellow fans</p>
+
+      <div class="rounded-2xl p-5 mb-8" style="background:linear-gradient(135deg,#1a1a3e,#151530); border:1px solid rgba(6,214,160,0.2);">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg" style="background:linear-gradient(135deg,#06d6a0,#3a86ff);">😊</div>
+          <span class="font-semibold text-sm">Start a discussion</span>
+        </div>
+        <textarea id="community-input" class="w-full rounded-xl p-4 text-sm resize-none" rows="3"
+          placeholder="Share your thoughts, ask questions, or show off your latest creation..."
+          style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:#e8e8f0; outline:none;"></textarea>
+        <div class="flex justify-end mt-3">
+          <button onclick="postCommunity()" class="px-6 py-2 rounded-xl text-sm font-semibold transition-transform hover:scale-105" style="background:#06d6a0; color:#0a0a1a;">Post</button>
+        </div>
+      </div>
+
+      <div id="community-posts" class="grid gap-5"></div>
+    </main>
+
+    <footer class="w-full py-10 px-6 text-center mt-auto" style="background:rgba(255,255,255,0.02); border-top:1px solid rgba(255,255,255,0.05);">
+      <div class="font-display text-lg mb-2 gradient-text">CosPlix</div>
+      <p class="text-xs" style="color:#606080;">© 2026 CosPlix Hub. Made with 💜 for the fandom community.</p>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Initialize Lucide icons and Mobile Menu Logic
+    function toggleMobile() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+      menu.classList.toggle('open');
+    }
+
+    $(document).ready(() => {
+      lucide.createIcons(); // Required to render the menu icon
+      initCommunityPage();
+    });
+  </script>
+</body>
+</html>
